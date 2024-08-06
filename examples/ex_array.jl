@@ -1,4 +1,4 @@
-using RadiationPattern
+using RadiationPatterns
 using MeshGrid
 
 # this examples plots the 3D 8 by 8 array factor with scanned beam

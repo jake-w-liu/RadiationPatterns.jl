@@ -1,4 +1,4 @@
-using RadiationPattern
+using RadiationPatterns
 using MeshGrid
 
 # creating a dipole pattern 

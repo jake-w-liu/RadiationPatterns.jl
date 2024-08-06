@@ -1,6 +1,6 @@
-using RadiationPattern
+using RadiationPatterns
 using Test
 
-@testset "RadiationPattern.jl" begin
+@testset "RadiationPatterns.jl" begin
     # Write your tests here.
 end

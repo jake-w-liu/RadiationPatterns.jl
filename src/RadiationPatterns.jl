@@ -1,4 +1,4 @@
-module RadiationPattern
+module RadiationPatterns
 
 using PlotlyJS
 using PlotlyGeometries

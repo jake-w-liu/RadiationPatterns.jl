@@ -1,4 +1,4 @@
-using RadiationPattern
+using RadiationPatterns
 using CSV, DataFrames
 
 # this file reads a SGH (standard gain horn) radiation pattern and plots it 

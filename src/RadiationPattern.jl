@@ -5,8 +5,6 @@ using PlotlyGeometries
 using MeshGrid
 using Trapz
 
-using Infiltrator
-
 export Pattern
 export plot_rect, plot_polar
 export ptn_2d, ptn_3d

@@ -1,10 +1,9 @@
 name = "RadiationPattern"
 uuid = "b6717af4-2a8a-40aa-9b8e-77d45ce125cc"
 authors = ["Jake W. Liu"]
-version = "1.0.0-DEV"
+version = "1.0.0"
 
 [deps]
-Infiltrator = "5903a43b-9cc3-4c30-8d17-598619ec4e9b"
 MeshGrid = "ebf956a0-ef5e-43be-9fb1-27952996e635"
 PlotlyGeometries = "da4dd95e-df4f-4caf-ac06-cee3b0f5c2e6"
 PlotlyJS = "f0f68f2c-4968-5e81-91da-67840de0976a"
@@ -12,6 +11,10 @@ Trapz = "592b5752-818d-11e9-1e9a-2b8ca4a44cd1"
 
 [compat]
 julia = "1.6.7"
+MeshGrid = "1.0.3"
+PlotlyGeometries = "2.1.1"
+PlotlyJS = "0.18.13"
+Trapz = "2.0.3"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

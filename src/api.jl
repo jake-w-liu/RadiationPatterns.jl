@@ -1,5 +1,5 @@
 mutable struct Pattern{T1,T2}
-    U::Array{T1,2}
+    U::Union{Array{T1,2}, SubArray{T1,2}}
     x::Vector{T2}
     y::Vector{T2}
 end
@@ -306,26 +306,50 @@ function ptn_holo(
     Pat::Pattern;
     xlabel::String = "",
     ylabel::String = "",
-    zmax::Real = 1,
-    zmin::Real = -1,
-    max_pixel = 550,
+    zrange::Vector{<:Real} = [0, 0],
+    ref_size = 500,
     colorscale = "Jet",
 )
     #calculate figure size
     height = length(Pat.y)
-    width = 1.1 * length(Pat.x)
+    width = length(Pat.x)
     ratio = height / width
     if width > height
-        width = max_pixel
+        width = ref_size
         height = round(Int64, width * ratio)
     else
-        height = max_pixel
+        height = ref_size
         width = round(Int64, height / ratio)
     end
-    width += 20
-
+    if height > width
+        width += round(Int, height/width) * 25
+    elseif height < width
+        height += round(Int, width/height) * 20
+    end
+    
+    FV = @view Pat.U[:,:]
+    FV = transpose(FV)
     trace =
-        heatmap(x = U.x, y = U.y, z = U, zmax = zmax, zmin = zmin, colorscale = colorscale)
+        heatmap(x = Pat.x, y = Pat.y, z = FV, colorscale = colorscale)
+    if !all(zrange .== [0, 0])
+        trace.zmin = zrange[1]
+        trace.zmax = zrange[2]
+    end
+    if length(Pat.x) > 1
+        dx = Pat.x[2] - Pat.x[1]
+    else
+        dx = 0
+    end
+    if length(Pat.y) > 1
+        dy = Pat.y[2] - Pat.y[1]
+    else
+        dy = 0
+    end
+    if dx == 0 && dy != 0
+        dx = dy
+    elseif dy == 0 && dx != 0
+        dy = dx
+    end
     layout = Layout(
         height = height,
         width = width,
@@ -333,24 +357,21 @@ function ptn_holo(
         scene = attr(aspectmode = "data"),
         xaxis = attr(
             title = xlabel,
-            range = [minimum(Pat.x), maximum(Pat.x)],
-            autorange = false,
-            ticks = "outside",
-            tickmode = "auto",
+            range = [minimum(Pat.x)-dx/2, maximum(Pat.x)+dx/2],
             automargin = true,
         ),
         yaxis = attr(
             title = ylabel,
-            range = [minimum(Pat.y), maximum(Pat.y)],
-            autorange = false,
-            ticks = "outside",
-            tickmode = "auto",
+            range = [minimum(Pat.y)-dy/2, maximum(Pat.y)+dy/2],
             automargin = true,
+        ),
+        margin = attr(
+            r = 0,
+            b = 0,
         ),
     )
     fig = plot(trace, layout)
-    display(fig)
-
+    
     return fig
 end
 

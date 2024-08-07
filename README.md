@@ -210,7 +210,7 @@ A `Pattern` representing the directivity.
 ### `direc`
 
 ```julia
-direc_ptn(Pat::Pattern)
+direc(Pat::Pattern)
 ```
 
 Calculates the directivity of a radiation pattern. `Pat.x` should be theta values in degrees, and `Pat.y` should be phi values in degrees.  

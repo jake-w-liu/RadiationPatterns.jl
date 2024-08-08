@@ -3,7 +3,7 @@
 
 [![Build Status](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml)
 
-`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJs.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
+`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJS.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
 
 <p align="center">
   <img alt="RadiationPatterns.jl" src="./media/illus1.png" width="50%" height="auto" />
@@ -11,6 +11,8 @@
 <p align="center">
   <img alt="RadiationPatterns.jl" src="./media/illus2.png" width="50%" height="auto" />
 </p>
+
+I use this package in my publications and would be delighted if you could cite it in your work. Thank you for your support!
 
 ## Data Structure
 
@@ -37,11 +39,11 @@ U = sind.(T).^2
 Pat = Pattern(U, tht, phi)
 ```
 
-The convension for `x` associating with `theta` and `y` associating with `phi` is used thorughout when creating patterns in spherical coordinates.  
+The convension for `x` associating with `theta` in degrees and `y` associating with `phi` in degrees is used thorughout when creating patterns in spherical coordinates.  
 
 ## Functions
 
-There are two primary plotting functions used by 2D pattern plotting function (`ptn_2d`): `plot_rect` and `plot_polar`. They are not directly used for pattern plotting; however, these two functions can also be used as a simplified API to draw 2D plots in rectangular and polar coordinates (if you find setting in PlotlyJS very cumbersome). In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. Noted that both of the functions support ploting multiple traces in one plot.
+There are two primary plotting functions used by the 2D pattern plotting function (`ptn_2d`): `plot_rect` and `plot_polar`. They are not directly used for pattern plotting; however, these two functions can also be used as a simplified API to draw 2D plots in rectangular and polar coordinates (if you find settings in PlotlyJS very cumbersome :laughing:). In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. Noted that both of the functions support plotting multiple traces in one plot.
 
 ### `plot_rect`
 
@@ -71,9 +73,9 @@ Plots a rectangular (Cartesian) plot.
 - `yrange`: Range for the y-axis (default: `[0, 0]`)
 - `width`: Width of the plot (default: `0`)
 - `height`: Height of the plot (default: `0`)
-- `mode`: Plotting mode (default: `"lines"`, can be vector of vectors)
-- `color`: Color of the plot lines (default: `""`, can be vector of vectors)
-- `name`: Name of the plot lines (default: `""`, can be vector of vectors)
+- `mode`: Plotting mode (default: `"lines"`, can be vector)
+- `color`: Color of the plot lines (default: `""`, can be vector)
+- `name`: Name of the plot lines (default: `""`, can be vector)
 
 ### `plot_polar`
 
@@ -99,13 +101,13 @@ Plots a polar plot.
 - `rrange`: Range for the radial axis (default: `[0, 0]`)
 - `width`: Width of the plot (default: `0`)
 - `height`: Height of the plot (default: `0`)
-- `mode`: Plotting mode (default: `"lines"`, can be vector of vectors)
-- `color`: Color of the plot lines (default: `""`, can be vector of vectors)
-- `name`: Name of the plot lines (default: `""`, can be vector of vectors)
+- `mode`: Plotting mode (default: `"lines"`, can be vector)
+- `color`: Color of the plot lines (default: `""`, can be vector)
+- `name`: Name of the plot lines (default: `""`, can be vector)
 
 ___
 
-The following functions creates pattern plots. Currently 2D patterns, 3D patterns, and holograms (can be used to plot a slice of field distributions) are supported.
+The following functions create pattern plots from the `Pattern` object. Currently 2D patterns, 3D patterns, and holograms (can be used to plot a slice of field distributions) are supported. 
 
 ### `ptn_2d`
 
@@ -129,7 +131,7 @@ ptn_2d(
 )
 ```
 
-Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=2` takes the slice of `U[ind, :]`. Can be used to compare two patterns (see the example `ex_horn.jl`). When comparing two pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `name`.
+Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `name` by setting these keywords as vectors (if not setted, default values are used).
 
 #### Arguments
 
@@ -155,7 +157,7 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 ptn_3d(Pat::Pattern; dB::Bool = false, thr::Real = -50)
 ```
 
-Plots a 3D radiation pattern. In 3D cases, `Pat.x` should be theta values in degrees, and `Pat.y` should be phi values in degrees. If dB scale is used for the data, please set the keyword `dB` to true. A threadsold value is used in case that `-Inf` appears in the dB scale data.
+Plots a 3D radiation pattern. In 3D cases, `Pat.x` should be `theta` values in degrees, and `Pat.y` should be `phi` values in degrees. If dB scale is used for the data, please set the keyword `dB` to `true`. A threadsold value `thr` (max difference from the maximum value of the pattern) is used in case that `-Inf` appears in the dB scale data.
 
 #### Arguments
 
@@ -176,7 +178,7 @@ ptn_holo(
 )
 ```
 
-Plots a holographic (heatmap) radiation pattern. Currently I have issues in setting both the axis ratio and the range of the heatmap plot. In order to have an 1:1 aspect ratio, I have tried to fine tune the widthand height of the plot. One can try to adjust the `ref_size` keyword to set the figure size.
+Plots a holographic (heatmap) radiation pattern. Currently I have issues in setting both the axis ratio and the range of the heatmap plot. In order to have an 1:1 aspect ratio, I have tried to fine tune the width and height of the plot. One can try to adjust the `ref_size` keyword to set the figure size. I hope that more improvements can be made in the future.
 
 #### Arguments
 
@@ -189,7 +191,7 @@ Plots a holographic (heatmap) radiation pattern. Currently I have issues in sett
 
 ___
 
-The following are functionalities to calculate directivity of a pattern. `Trapz.jl` is used for integration. Noted that `Pat.x` represents the theta axis and `Ptn.y` represents the phi axis. 
+The following are functionalities to calculate directivity of a pattern. `Trapz.jl` is used for integration. Noted that `Pat.x` represents the `theta` axis and `Ptn.y` represents the `phi` axis. 
 
 ### `direc_ptn`
 
@@ -197,7 +199,7 @@ The following are functionalities to calculate directivity of a pattern. `Trapz.
 direc_ptn(Pat::Pattern)
 ```
 
-Calcultate the directivity pattern of a radiation pattern. `Pat.x` should be theta values in degrees, and `Pat.y` should be phi values in degrees.  
+Calcultate the directivity pattern of a radiation pattern. `Pat.x` should be `theta` values in degrees, and `Pat.y` should be `phi` values in degrees.  
 
 #### Arguments
 
@@ -213,7 +215,7 @@ A `Pattern` representing the directivity.
 direc(Pat::Pattern)
 ```
 
-Calculates the directivity of a radiation pattern. `Pat.x` should be theta values in degrees, and `Pat.y` should be phi values in degrees.  
+Calculates the directivity of a radiation pattern. `Pat.x` should be `theta` values in degrees, and `Pat.y` should be `phi` values in degrees.  
 
 #### Arguments
 

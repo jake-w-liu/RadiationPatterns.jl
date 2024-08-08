@@ -1,0 +1,19 @@
+abstract: RadiationPatterns.jl is a Julia package designed for visualizing radiation patterns using PlotlyJS.jl.
+authors:
+  - family-names: Liu
+    given-names: Jake W.
+    orcid: "https://orcid.org/0000-0001-5458-7917"
+cff-version: 1.2.0
+date-released: "2024-08-08"
+identifiers:
+  - type: url
+    value: "https://github.com/akjake616/RadiationPatterns.jl"
+    description: Latest version
+keywords:
+  - research
+  - "detection repackaged Android applications"
+  - "resouce files"
+license: MIT
+message: If you use this software, please cite it using these metadata.
+repository-code: "https://github.com/akjake616/RadiationPatterns.jl"
+title: RadiationPatterns.jl

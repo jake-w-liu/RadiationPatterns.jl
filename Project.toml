@@ -1,7 +1,7 @@
 name = "RadiationPatterns"
 uuid = "b6717af4-2a8a-40aa-9b8e-77d45ce125cc"
 authors = ["Jake W. Liu"]
-version = "1.0.0"
+version = "1.0.1"
 
 [deps]
 MeshGrid = "ebf956a0-ef5e-43be-9fb1-27952996e635"

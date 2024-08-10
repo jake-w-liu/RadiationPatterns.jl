@@ -39,7 +39,7 @@ U = sind.(T).^2
 Pat = Pattern(U, tht, phi)
 ```
 
-The convension for `x` associating with `theta` in degrees and `y` associating with `phi` in degrees is used thorughout when creating patterns in spherical coordinates.  
+The convention for `x` associating with `theta` in degrees and `y` associating with `phi` in degrees is used throughout when creating patterns in spherical coordinates.  
 
 ## Functions
 
@@ -131,7 +131,7 @@ ptn_2d(
 )
 ```
 
-Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `name` by setting these keywords as vectors (if not setted, default values are used).
+Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `name` by setting these keywords as vectors (if not set, default values are used).
 
 #### Arguments
 
@@ -199,7 +199,7 @@ The following are functionalities to calculate directivity of a pattern. `Trapz.
 direc_ptn(Pat::Pattern)
 ```
 
-Calcultate the directivity pattern of a radiation pattern. `Pat.x` should be `theta` values in degrees, and `Pat.y` should be `phi` values in degrees.  
+Calculate the directivity pattern of a radiation pattern. `Pat.x` should be `theta` values in degrees, and `Pat.y` should be `phi` values in degrees.  
 
 #### Arguments
 

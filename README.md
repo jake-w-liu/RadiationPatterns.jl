@@ -21,18 +21,18 @@ I use this package in my publications and would be delighted if you could cite i
 A `Pattern` object contains the radiation pattern data:
 
 ```julia
-mutable struct Pattern{T1, T2}
-    U::Union{Array{T1,2}, SubArray{T1,2}}
-    x::Vector{T2}
-    y::Vector{T2}
+mutable struct Pattern{T1,T2}
+    U::Union{Array{T1,2}, SubArray{T1,2}, LinearAlgebra.Transpose{T1}}
+    x::Union{Vector{T2}, AbstractRange{T2}}
+    y::Union{Vector{T2}, AbstractRange{T2}}
 end
 ```
 
 where `U` is a 2D meshgrid data representing the radiation pattern with `x` as the coordinate for the first dimension and `y` as the coordinate for the second dimension. For example, the following creates a dipole radiation pattern:
 
 ```julia
-tht = collect(-180:180)
-phi = collect(0:180)
+tht = -180:180
+phi = 0:180
 
 _, T = meshgrid(phi, tht) # uses MeshGrid.jl
 U = sind.(T).^2

@@ -2,8 +2,8 @@ using RadiationPatterns
 using MeshGrid
 
 # creating a dipole pattern 
-tht = collect(-180:180)
-phi = collect(0:180)
+tht = -180:180
+phi = 0:180
 
 _, T = meshgrid(phi, tht) # uses MeshGrid.jl
 U = sind.(T).^2
@@ -15,14 +15,14 @@ display(fig1)
 
 # plot 2D polar patterns (plotting Pat.U[:, 1])
 fig2 = ptn_2d(Pat; ind = 1, dims = 1, type = "polar", color = "red")
-display(fig2)
+display(fig2);
 
 # conparison of a consine tapered pattern
-fig3 = ptn_2d([Pat, Pattern(cosd.(T) , tht, phi)]; ind = 1, dims = 1, xlabel = "θ (deg)", ylabel = "amplitude", xrange=[0, 90], name = ["dipole", "patch"])
+fig3 = ptn_2d([Pat, Pattern(cosd.(T) , tht, phi)]; ind = 1, dims = 1, xlabel = "θ (deg)", ylabel = "amplitude", xrange=[0, 90], name = ["dipole", "consine"])
 display(fig3)
 
 # conparison of a consine tapered pattern
-fig4 = ptn_2d([Pat, Pattern(abs.(cosd.(T)) , tht, phi)]; ind = 1, dims = 1, type = "polar", name = ["dipole", "patch"])
+fig4 = ptn_2d([Pat, Pattern(abs.(cosd.(T)) , tht, phi)]; ind = 1, dims = 1, type = "polar", name = ["dipole", "consine"])
 display(fig4)
 
 # creates directivity pattern and transform to dB scale

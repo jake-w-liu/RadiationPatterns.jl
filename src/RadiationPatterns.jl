@@ -4,6 +4,7 @@ using PlotlyJS
 using PlotlyGeometries
 using MeshGrid
 using Trapz
+using LinearAlgebra
 
 export Pattern
 export plot_rect, plot_polar

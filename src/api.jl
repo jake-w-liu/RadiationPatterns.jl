@@ -1,7 +1,7 @@
 mutable struct Pattern{T1,T2}
-    U::Union{Array{T1,2}, SubArray{T1,2}}
-    x::Vector{T2}
-    y::Vector{T2}
+    U::Union{Array{T1,2}, SubArray{T1,2}, LinearAlgebra.Transpose{T1}}
+    x::Union{Vector{T2}, AbstractRange{T2}}
+    y::Union{Vector{T2}, AbstractRange{T2}}
 end
 
 function plot_rect(

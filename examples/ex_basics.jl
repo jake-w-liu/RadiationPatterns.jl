@@ -2,8 +2,8 @@ using RadiationPatterns
 using MeshGrid
 
 # creating a dipole pattern 
-tht = -180:180
-phi = 0:180
+tht = collect(-180:180)
+phi = collect(0:180)
 
 _, T = meshgrid(phi, tht) # uses MeshGrid.jl
 U = sind.(T).^2

@@ -423,22 +423,14 @@ function ptn_3d(
 end
 
 function direc_ptn(Pat::Pattern)
-    F = Pat.U / maximum(Pat.U)
+    F = Pat.U
     tht = Pat.x
     phi = Pat.y
-    _, T = meshgrid(phi, tht)
-
-    Ptot = trapz((tht * pi / 180, phi * pi / 180), F .* abs.(sin.(T * pi / 180)))
+    Ptot = trapz((tht * pi / 180, phi * pi / 180), F .* abs.(sin.(tht * pi / 180)))
     D = F * 4 * pi / Ptot
     return Pattern(D, tht, phi)
 end
 
 function direc(Pat::Pattern)
-    F = Pat.U / maximum(Pat.U)
-    tht = Pat.x
-    phi = Pat.y
-    _, T = meshgrid(phi, tht)
-
-    Ptot = trapz((tht * pi / 180, phi * pi / 180), F .* abs.(sin.(T * pi / 180)))
-    return maximum(F * 4 * pi / Ptot)
+    return maximum(direc_ptn(Pat).U)
 end

@@ -1,7 +1,7 @@
-mutable struct Pattern{T1,T2}
+mutable struct Pattern{T1<:Number,T2<:Real,T3<:AbstractRange{T2}}
     U::Union{Array{T1,2}, SubArray{T1,2}, LinearAlgebra.Transpose{T1}}
-    x::Union{Vector{T2}, AbstractRange{T2}}
-    y::Union{Vector{T2}, AbstractRange{T2}}
+    x::Union{Vector{T2}, T3}
+    y::Union{Vector{T2}, T3}
 end
 
 function plot_rect(
@@ -402,7 +402,6 @@ function ptn_3d(
         y = Yd,
         z = Zd,
         surfacecolor = S,
-        # colorbar = attr(title = "dB"),
         colorscale = "Jet",
     )
     layout = Layout(

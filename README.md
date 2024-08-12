@@ -6,10 +6,10 @@
 `RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJS.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
 
 <p align="center">
-  <img alt="RadiationPatterns.jl" src="./media/illus1.png" width="50%" height="auto" />
+  <img alt="illus1" src="./media/illus1.png" width="50%" height="auto" />
 </p>
 <p align="center">
-  <img alt="RadiationPatterns.jl" src="./media/illus2.png" width="50%" height="auto" />
+  <img alt="illus2" src="./media/illus2.png" width="50%" height="auto" />
 </p>
 
 I use this package in my publications and would be delighted if you could cite it in your work. Thank you for your support!
@@ -28,7 +28,13 @@ mutable struct Pattern{T1,T2}
 end
 ```
 
-where `U` is a 2D meshgrid data representing the radiation pattern with `x` as the coordinate for the first dimension and `y` as the coordinate for the second dimension. For example, the following creates a dipole radiation pattern:
+where `U` is a 2D meshgrid data representing the radiation pattern with `x` as the coordinate for the first dimension and `y` as the coordinate for the second dimension. The data structure is arranged as the following figure:
+
+<p align="center">
+  <img alt="illus3" src="./media/illus3.png" width="40%" height="auto" />
+</p>
+
+The following example creates a dipole radiation pattern:
 
 ```julia
 tht = -180:180

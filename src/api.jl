@@ -133,6 +133,122 @@ function plot_rect(
 end
 
 """
+plot_rect(
+    y;
+    xlabel = "",
+    ylabel = "",
+    xrange = [0, 0],
+    yrange = [0, 0],
+    width = 0,
+    height = 0,
+    mode = "lines",
+    color = "",
+    name = "",
+)
+Plots a rectangular (Cartesian) plot (x-axis not specified).
+
+#### Arguments
+
+- `y`: y-coordinate data (can be vector of vectors)
+- `xlabel`: Label for the x-axis (default: `""`)
+- `ylabel`: Label for the y-axis (default: `""`)
+- `xrange`: Range for the x-axis (default: `[0, 0]`)
+- `yrange`: Range for the y-axis (default: `[0, 0]`)
+- `width`: Width of the plot (default: `0`)
+- `height`: Height of the plot (default: `0`)
+- `mode`: Plotting mode (default: `"lines"`, can be vector)
+- `color`: Color of the plot lines (default: `""`, can be vector)
+- `name`: Name of the plot lines (default: `""`, can be vector)
+"""
+function plot_rect(
+    y;
+    xlabel = "",
+    ylabel = "",
+    xrange = [0, 0],
+    yrange = [0, 0],
+    width = 0,
+    height = 0,
+    mode = "lines",
+    color = "",
+    name = "",
+)
+    if isa(y, Vector) && eltype(y) <: Vector
+        trace = Vector{GenericTrace}(undef, length(y))
+        x_max = minimum(length.(y))
+        x = 0:1:x_max-1
+        if !(mode isa Vector)
+            mode = fill("lines", length(y))
+        elseif length(mode) < length(y)
+            for _ = 1:length(y)-length(mode)
+                push!(mode, "lines")
+            end
+        end
+        if !(color isa Vector)
+            color = fill("", length(y))
+        elseif length(color) < length(y)
+            for _ = 1:length(y)-length(color)
+                push!(color, "")
+            end
+        end
+        if !(name isa Vector)
+            name = fill("", length(y))
+        elseif length(name) < length(y)
+            for _ = 1:length(y)-length(name)
+                push!(name, "")
+            end
+        end
+        for n in eachindex(y)
+            trace[n] = scatter(
+                y = y[n],
+                x = x,
+                mode = mode[n],
+                line = attr(color = color[n]),
+                name = name[n],
+            )
+        end
+    else
+        x_max = length(y)
+        x = 0:1:x_max-1
+        trace = scatter(y = y, x = x, mode = mode, line = attr(color = color), name = name)
+    end
+    layout = Layout(
+        template = :plotly_white,
+        yaxis = attr(
+            title_text = ylabel,
+            zeroline = false,
+            showline = true,
+            mirror = true,
+            ticks = "outside",
+            tick0 = minimum(y),
+            automargin = true,
+        ),
+        xaxis = attr(
+            title_text = xlabel,
+            zeroline = false,
+            showline = true,
+            mirror = true,
+            ticks = "outside",
+            tick0 = minimum(x),
+            automargin = true,
+        ),
+    )
+    fig = plot(trace, layout)
+    if !all(xrange .== [0, 0])
+        update_xaxes!(fig, range = xrange)
+    end
+    if !all(yrange .== [0, 0])
+        update_yaxes!(fig, range = yrange)
+    end
+    if width > 0
+        relayout!(fig, width = width)
+    end
+    if height > 0
+        relayout!(fig, height = height)
+    end
+    return fig
+end
+
+"""
 plot_polar(
     theta, r;
     trange = [0, 0],
@@ -214,6 +330,107 @@ function plot_polar(
             end
         end
     else
+        trace = scatterpolar(
+            r = r,
+            theta = theta,
+            mode = mode,
+            line = attr(color = color),
+            name = name,
+        )
+    end
+
+    layout = Layout(
+        template = :plotly_white,
+        polar = attr(sector = [minimum(theta), maximum(theta)]),
+    )
+    fig = plot(trace, layout)
+    if !all(rrange .== [0, 0])
+        update_polars!(fig, radialaxis = attr(range = rrange))
+    end
+    if !all(trange .== [0, 0])
+        update_polars!(fig, attr(sector = trange))
+    end
+    if width > 0
+        relayout!(fig, width = width)
+    end
+    if height > 0
+        relayout!(fig, height = height)
+    end
+    return fig
+end
+
+"""
+plot_polar(
+    r;
+    trange = [0, 0],
+    rrange = [0, 0],
+    width = 0,
+    height = 0,
+    mode = "lines",
+    color = "",
+)
+
+Plots a polar plot (theta-axis not specified).
+
+#### Arguments
+
+- `r`: Radial coordinate data (can be vector of vectors)
+- `trange`: Range for the angular axis (default: `[0, 0]`)
+- `rrange`: Range for the radial axis (default: `[0, 0]`)
+- `width`: Width of the plot (default: `0`)
+- `height`: Height of the plot (default: `0`)
+- `mode`: Plotting mode (default: `"lines"`, can be vector)
+- `color`: Color of the plot lines (default: `""`, can be vector)
+- `name`: Name of the plot lines (default: `""`, can be vector)
+"""
+function plot_polar(
+    r;
+    trange = [0, 0],
+    rrange = [0, 0],
+    width = 0,
+    height = 0,
+    mode = "lines",
+    color = "",
+    name = "",
+)
+    if isa(r, Vector) && eltype(r) <: Vector
+        theta_max = minimum(length.(y))
+        theta = 0:1:theta_max-1
+        trace = Vector{GenericTrace}(undef, length(r))
+        if !(mode isa Vector)
+            mode = fill("lines", length(r))
+        elseif length(mode) < length(r)
+            for _ = 1:length(r)-length(mode)
+                push!(mode, "lines")
+            end
+        end
+        if !(color isa Vector)
+            color = fill("", length(r))
+        elseif length(color) < length(r)
+            for _ = 1:length(r)-length(color)
+                push!(color, "")
+            end
+        end
+        if !(name isa Vector)
+            name = fill("", length(r))
+        elseif length(name) < length(r)
+            for _ = 1:length(r)-length(name)
+                push!(name, "")
+            end
+        end
+
+        for n in scatterpolar(r)
+            trace[n] = scatter(
+                r = r[n],
+                theta = theta,
+                mode = mode[n],
+                line = attr(color = color[n]),
+                name = name[n],
+            )
+        end
+    else
+        theta_max = length(y)
+        theta = 0:1:theta_max-1
         trace = scatterpolar(
             r = r,
             theta = theta,
@@ -475,7 +692,7 @@ function ptn_holo(
     #calculate figure size
     height = length(Pat.y)
     width = length(Pat.x)
-    ratio = height / width
+    ratio = height / (width)
     if width > height
         width = ref_size
         height = round(Int64, width * ratio)
@@ -483,10 +700,10 @@ function ptn_holo(
         height = ref_size
         width = round(Int64, height / ratio)
     end
-    if height > width
-        width += round(Int, height / width) * 25
+    if height >= width
+        width += round(Int, ratio) * 45
     elseif height < width
-        height += round(Int, width / height) * 20
+        height += round(Int, 1/ratio) * 20
     end
 
     FV = @view Pat.U[:, :]
@@ -520,6 +737,7 @@ function ptn_holo(
             title = xlabel,
             range = [minimum(Pat.x) - dx / 2, maximum(Pat.x) + dx / 2],
             automargin = true,
+            scaleanchor = "y",
         ),
         yaxis = attr(
             title = ylabel,

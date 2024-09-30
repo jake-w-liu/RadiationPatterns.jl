@@ -71,7 +71,7 @@ Plots a rectangular (Cartesian) plot.
 
 #### Arguments
 
-- `x`: x-coordinate data (can be vector of vectors)
+- `x`: x-coordinate data (can be vector of vectors, or be omitted)
 - `y`: y-coordinate data (can be vector of vectors)
 - `xlabel`: Label for the x-axis (default: `""`)
 - `ylabel`: Label for the y-axis (default: `""`)
@@ -101,7 +101,7 @@ Plots a polar plot.
 
 #### Arguments
 
-- `theta`: Angular coordinate data (can be vector of vectors)
+- `theta`: Angular coordinate data (can be vector of vectors, or be omitted)
 - `r`: Radial coordinate data (can be vector of vectors)
 - `trange`: Range for the angular axis (default: `[0, 0]`)
 - `rrange`: Range for the radial axis (default: `[0, 0]`)

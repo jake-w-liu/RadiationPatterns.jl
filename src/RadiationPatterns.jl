@@ -5,9 +5,10 @@ using PlotlyGeometries
 using MeshGrid
 using Trapz
 using LinearAlgebra
+using BatchAssign
 
 export Pattern
-export plot_rect, plot_polar
+export plot_rect, plot_polar, plot_holo
 export ptn_2d, ptn_3d
 export ptn_holo
 export direc_ptn, direc

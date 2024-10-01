@@ -461,6 +461,189 @@ function plot_polar(
 end
 
 """
+plot_holo(
+    x,
+    y,
+    U;
+    xlabel = "",
+    ylabel = "",
+    zrange = [0, 0],
+    ref_size = 500,
+    colorscale = "Jet",
+)
+
+Plots holographic data.
+
+#### Arguments
+
+- 'x': x-axis range
+- 'y': x-axis range
+- `U`: 2D hologram data
+- `xlabel`: Label for the x-axis (default: `""`)
+- `ylabel`: Label for the y-axis (default: `""`)
+- `zrange`: Range for the z-axis (default: `[0, 0]`)
+- `ref_size`: ref size of the plot in pixels (default: `500`)
+- `colorscale`: Color scale for the heatmap (default: `"Jet"`)
+"""
+function plot_holo(
+    x,
+    y,
+    U;
+    xlabel = "",
+    ylabel = "",
+    zrange = [0, 0],
+    ref_size = 500,
+    colorscale = "Jet",
+)
+    #calculate figure size
+    height = length(y)
+    width = length(x)
+    ratio = height / (width)
+    if width > height
+        width = ref_size
+        height = round(Int64, width * ratio)
+    else
+        height = ref_size
+        width = round(Int64, height / ratio)
+    end
+    if height >= width
+        width += round(Int, ratio) * 45
+    elseif height < width
+        height += round(Int, 1/ratio) * 20
+    end
+
+    FV = @view U[:, :]
+    FV = transpose(FV)
+    trace = heatmap(x = x, y = y, z = FV, colorscale = colorscale)
+    if !all(zrange .== [0, 0])
+        trace.zmin = zrange[1]
+        trace.zmax = zrange[2]
+    end
+    if length(x) > 1
+        dx = x[2] - x[1]
+    else
+        dx = 0
+    end
+    if length(y) > 1
+        dy = y[2] - y[1]
+    else
+        dy = 0
+    end
+    if dx == 0 && dy != 0
+        dx = dy
+    elseif dy == 0 && dx != 0
+        dy = dx
+    end
+    layout = Layout(
+        height = height,
+        width = width,
+        plot_bgcolor = "white",
+        scene = attr(aspectmode = "data"),
+        xaxis = attr(
+            title = xlabel,
+            range = [minimum(x) - dx / 2, maximum(x) + dx / 2],
+            automargin = true,
+            scaleanchor = "y",
+        ),
+        yaxis = attr(
+            title = ylabel,
+            range = [minimum(y) - dy / 2, maximum(y) + dy / 2],
+            automargin = true,
+        ),
+        margin = attr(r = 0, b = 0),
+    )
+    fig = plot(trace, layout)
+
+    return fig
+end
+
+
+"""
+plot_holo(
+    U;
+    xlabel = "",
+    ylabel = "",
+    zrange = [0, 0],
+    ref_size = 500,
+    colorscale = "Jet",
+)
+
+Plots holographic data.
+
+#### Arguments
+
+- `U`: 2D hologram data
+- `xlabel`: Label for the x-axis (default: `""`)
+- `ylabel`: Label for the y-axis (default: `""`)
+- `zrange`: Range for the z-axis (default: `[0, 0]`)
+- `ref_size`: ref size of the plot in pixels (default: `500`)
+- `colorscale`: Color scale for the heatmap (default: `"Jet"`)
+"""
+function plot_holo(
+    U;
+    xlabel = "",
+    ylabel = "",
+    zrange = [0, 0],
+    ref_size = 500,
+    colorscale = "Jet",
+)
+    #calculate figure size
+    height = length(y)
+    width = length(x)
+    ratio = height / (width)
+    if width > height
+        width = ref_size
+        height = round(Int64, width * ratio)
+    else
+        height = ref_size
+        width = round(Int64, height / ratio)
+    end
+    if height >= width
+        width += round(Int, ratio) * 45
+    elseif height < width
+        height += round(Int, 1/ratio) * 20
+    end
+
+    FV = @view U[:, :]
+    FV = transpose(FV)
+    x = collect(0:1:size(U, 1)-1)
+    y = collect(0:1:size(U, 2)-1)
+    
+    trace = heatmap(x = x, y = y, z = FV, colorscale = colorscale)
+    if !all(zrange .== [0, 0])
+        trace.zmin = zrange[1]
+        trace.zmax = zrange[2]
+    end
+    @all dx dy = 1
+    if dx == 0 && dy != 0
+        dx = dy
+    elseif dy == 0 && dx != 0
+        dy = dx
+    end
+    layout = Layout(
+        height = height,
+        width = width,
+        plot_bgcolor = "white",
+        scene = attr(aspectmode = "data"),
+        xaxis = attr(
+            title = xlabel,
+            range = [minimum(x) - dx / 2, maximum(x) + dx / 2],
+            automargin = true,
+            scaleanchor = "y",
+        ),
+        yaxis = attr(
+            title = ylabel,
+            range = [minimum(y) - dy / 2, maximum(y) + dy / 2],
+            automargin = true,
+        ),
+        margin = attr(r = 0, b = 0),
+    )
+    fig = plot(trace, layout)
+
+    return fig
+end
+
+"""
 ptn_2d(
     Pat::Union{Pattern,Vector{<:Pattern}};
     ind::Union{Int,Vector{Int}} = 1,
@@ -689,66 +872,16 @@ function ptn_holo(
     ref_size = 500,
     colorscale = "Jet",
 )
-    #calculate figure size
-    height = length(Pat.y)
-    width = length(Pat.x)
-    ratio = height / (width)
-    if width > height
-        width = ref_size
-        height = round(Int64, width * ratio)
-    else
-        height = ref_size
-        width = round(Int64, height / ratio)
-    end
-    if height >= width
-        width += round(Int, ratio) * 45
-    elseif height < width
-        height += round(Int, 1/ratio) * 20
-    end
-
-    FV = @view Pat.U[:, :]
-    FV = transpose(FV)
-    trace = heatmap(x = Pat.x, y = Pat.y, z = FV, colorscale = colorscale)
-    if !all(zrange .== [0, 0])
-        trace.zmin = zrange[1]
-        trace.zmax = zrange[2]
-    end
-    if length(Pat.x) > 1
-        dx = Pat.x[2] - Pat.x[1]
-    else
-        dx = 0
-    end
-    if length(Pat.y) > 1
-        dy = Pat.y[2] - Pat.y[1]
-    else
-        dy = 0
-    end
-    if dx == 0 && dy != 0
-        dx = dy
-    elseif dy == 0 && dx != 0
-        dy = dx
-    end
-    layout = Layout(
-        height = height,
-        width = width,
-        plot_bgcolor = "white",
-        scene = attr(aspectmode = "data"),
-        xaxis = attr(
-            title = xlabel,
-            range = [minimum(Pat.x) - dx / 2, maximum(Pat.x) + dx / 2],
-            automargin = true,
-            scaleanchor = "y",
-        ),
-        yaxis = attr(
-            title = ylabel,
-            range = [minimum(Pat.y) - dy / 2, maximum(Pat.y) + dy / 2],
-            automargin = true,
-        ),
-        margin = attr(r = 0, b = 0),
+    return plot_holo(
+        Pat.x,
+        Pat.y,
+        Pat.U;
+        xlabel,
+        ylabel,
+        zrange,
+        ref_size,
+        colorscale,
     )
-    fig = plot(trace, layout)
-
-    return fig
 end
 
 """

@@ -49,7 +49,7 @@ The convention for `x` associating with `theta` in degrees and `y` associating w
 
 ## Functions
 
-There are two primary plotting functions used by the 2D pattern plotting function (`ptn_2d`): `plot_rect` and `plot_polar`. They are not directly used for pattern plotting; however, these two functions can also be used as a simplified API to draw 2D plots in rectangular and polar coordinates (if you find settings in PlotlyJS very cumbersome :laughing:). In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. Noted that both of the functions support plotting multiple traces in one plot.
+There are three primary plotting functions used by the pattern plotting function: `plot_rect`, `plot_polar` and `plot_holo`. They are not directly used for pattern plotting; however, these three functions can also be used as a simplified API to draw 2D plots in rectangular and polar coordinates, or heatmaps (if you find settings in PlotlyJS very cumbersome :laughing:). Funtions start with `ptn_` are used to plot `Pattern` object directly. In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. Noted that both of the functions `plot_rect`, `plot_polar` support plotting multiple traces in one plot.
 
 ### `plot_rect`
 
@@ -110,6 +110,34 @@ Plots a polar plot.
 - `mode`: Plotting mode (default: `"lines"`, can be vector)
 - `color`: Color of the plot lines (default: `""`, can be vector)
 - `name`: Name of the plot lines (default: `""`, can be vector)
+
+### `plot_holo`
+
+```julia
+plot_holo(
+    x,
+    y, 
+    U;
+    xlabel::String = "",
+    ylabel::String = "",
+    zrange::Vector{<:Real} = [0, 0],
+    ref_size = 500,
+    colorscale = "Jet",
+)
+```
+
+Plots holographic data.
+
+#### Arguments
+
+- 'x': x-axis range (can be omitted)
+- 'y': x-axis range (can be omitted)
+- `U`: 2D hologram data
+- `xlabel`: Label for the x-axis (default: `""`)
+- `ylabel`: Label for the y-axis (default: `""`)
+- `zrange`: Range for the z-axis (default: `[0, 0]`)
+- `ref_size`: ref size of the plot in pixels (default: `500`)
+- `colorscale`: Color scale for the heatmap (default: `"Jet"`)
 
 ___
 

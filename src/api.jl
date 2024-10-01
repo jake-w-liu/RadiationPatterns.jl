@@ -587,7 +587,8 @@ function plot_holo(
     ref_size = 500,
     colorscale = "Jet",
 )
-    #calculate figure size
+    x = collect(0:1:size(U, 1)-1)
+    y = collect(0:1:size(U, 2)-1)
     height = length(y)
     width = length(x)
     ratio = height / (width)
@@ -606,9 +607,7 @@ function plot_holo(
 
     FV = @view U[:, :]
     FV = transpose(FV)
-    x = collect(0:1:size(U, 1)-1)
-    y = collect(0:1:size(U, 2)-1)
-    
+
     trace = heatmap(x = x, y = y, z = FV, colorscale = colorscale)
     if !all(zrange .== [0, 0])
         trace.zmin = zrange[1]

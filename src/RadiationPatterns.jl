@@ -6,6 +6,7 @@ using MeshGrid
 using Trapz
 using LinearAlgebra
 using BatchAssign
+using Infiltrator
 
 export Pattern
 export plot_rect, plot_polar, plot_holo

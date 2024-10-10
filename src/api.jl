@@ -50,21 +50,21 @@ function plot_rect(
     if isa(y, Vector) && eltype(y) <: Vector
         trace = Vector{GenericTrace}(undef, length(y))
         if !(mode isa Vector)
-            mode = fill("lines", length(y))
+            mode = fill(mode, length(y))
         elseif length(mode) < length(y)
             for _ = 1:length(y)-length(mode)
                 push!(mode, "lines")
             end
         end
         if !(color isa Vector)
-            color = fill("", length(y))
+            color = fill(color, length(y))
         elseif length(color) < length(y)
             for _ = 1:length(y)-length(color)
                 push!(color, "")
             end
         end
         if !(name isa Vector)
-            name = fill("", length(y))
+            name = fill(name, length(y))
         elseif length(name) < length(y)
             for _ = 1:length(y)-length(name)
                 push!(name, "")
@@ -177,21 +177,21 @@ function plot_rect(
         x_max = minimum(length.(y))
         x = 0:1:x_max-1
         if !(mode isa Vector)
-            mode = fill("lines", length(y))
+            mode = fill(mode, length(y))
         elseif length(mode) < length(y)
             for _ = 1:length(y)-length(mode)
                 push!(mode, "lines")
             end
         end
         if !(color isa Vector)
-            color = fill("", length(y))
+            color = fill(color, length(y))
         elseif length(color) < length(y)
             for _ = 1:length(y)-length(color)
                 push!(color, "")
             end
         end
         if !(name isa Vector)
-            name = fill("", length(y))
+            name = fill(name, length(y))
         elseif length(name) < length(y)
             for _ = 1:length(y)-length(name)
                 push!(name, "")
@@ -287,21 +287,21 @@ function plot_polar(
     if isa(r, Vector) && eltype(r) <: Vector
         trace = Vector{GenericTrace}(undef, length(r))
         if !(mode isa Vector)
-            mode = fill("lines", length(r))
+            mode = fill(mode, length(r))
         elseif length(mode) < length(r)
             for _ = 1:length(r)-length(mode)
                 push!(mode, "lines")
             end
         end
         if !(color isa Vector)
-            color = fill("", length(r))
+            color = fill(color, length(r))
         elseif length(color) < length(r)
             for _ = 1:length(r)-length(color)
                 push!(color, "")
             end
         end
         if !(name isa Vector)
-            name = fill("", length(r))
+            name = fill(name, length(r))
         elseif length(name) < length(r)
             for _ = 1:length(r)-length(name)
                 push!(name, "")
@@ -398,21 +398,21 @@ function plot_polar(
         theta = 0:1:theta_max-1
         trace = Vector{GenericTrace}(undef, length(r))
         if !(mode isa Vector)
-            mode = fill("lines", length(r))
+            mode = fill(mode, length(r))
         elseif length(mode) < length(r)
             for _ = 1:length(r)-length(mode)
                 push!(mode, "lines")
             end
         end
         if !(color isa Vector)
-            color = fill("", length(r))
+            color = fill(color, length(r))
         elseif length(color) < length(r)
             for _ = 1:length(r)-length(color)
                 push!(color, "")
             end
         end
         if !(name isa Vector)
-            name = fill("", length(r))
+            name = fill(name, length(r))
         elseif length(name) < length(r)
             for _ = 1:length(r)-length(name)
                 push!(name, "")

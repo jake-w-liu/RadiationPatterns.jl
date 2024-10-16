@@ -49,25 +49,29 @@ function plot_rect(
 )
     if isa(y, Vector) && eltype(y) <: Vector
         trace = Vector{GenericTrace}(undef, length(y))
+        modeV = fill("line", length(y))
+        colorV = fill("", length(y))
+        nameV = fill("", length(y))
+        
         if !(mode isa Vector)
-            mode = fill(mode, length(y))
-        elseif length(mode) < length(y)
-            for _ = 1:length(y)-length(mode)
-                push!(mode, "lines")
+            fill!(modeV, mode)
+        else
+            for n in eachindex(mode)
+                modeV[n] = mode[n]
             end
         end
         if !(color isa Vector)
-            color = fill(color, length(y))
-        elseif length(color) < length(y)
-            for _ = 1:length(y)-length(color)
-                push!(color, "")
+            fill!(colorV, color)
+        else
+            for n in eachindex(color)
+                colorV[n] = color[n]
             end
         end
         if !(name isa Vector)
-            name = fill(name, length(y))
-        elseif length(name) < length(y)
-            for _ = 1:length(y)-length(name)
-                push!(name, "")
+            fill!(nameV, name)
+        else
+            for n in eachindex(name)
+                nameV[n] = name[n]
             end
         end
 
@@ -76,9 +80,9 @@ function plot_rect(
                 trace[n] = scatter(
                     y = y[n],
                     x = x[n],
-                    mode = mode[n],
-                    line = attr(color = color[n]),
-                    name = name[n],
+                    mode = modeV[n],
+                    line = attr(color = colorV[n]),
+                    name = nameV[n],
                 )
             end
         else
@@ -86,9 +90,9 @@ function plot_rect(
                 trace[n] = scatter(
                     y = y[n],
                     x = x,
-                    mode = mode[n],
-                    line = attr(color = color[n]),
-                    name = name[n],
+                    mode = modeV[n],
+                    line = attr(color = colorV[n]),
+                    name = nameV[n],
                 )
             end
         end
@@ -176,34 +180,39 @@ function plot_rect(
         trace = Vector{GenericTrace}(undef, length(y))
         x_max = minimum(length.(y))
         x = 0:1:x_max-1
+        modeV = fill("line", length(y))
+        colorV = fill("", length(y))
+        nameV = fill("", length(y))
+        
         if !(mode isa Vector)
-            mode = fill(mode, length(y))
-        elseif length(mode) < length(y)
-            for _ = 1:length(y)-length(mode)
-                push!(mode, "lines")
+            fill!(modeV, mode)
+        else
+            for n in eachindex(mode)
+                modeV[n] = mode[n]
             end
         end
         if !(color isa Vector)
-            color = fill(color, length(y))
-        elseif length(color) < length(y)
-            for _ = 1:length(y)-length(color)
-                push!(color, "")
+            fill!(colorV, color)
+        else
+            for n in eachindex(color)
+                colorV[n] = color[n]
             end
         end
         if !(name isa Vector)
-            name = fill(name, length(y))
-        elseif length(name) < length(y)
-            for _ = 1:length(y)-length(name)
-                push!(name, "")
+            fill!(nameV, name)
+        else
+            for n in eachindex(name)
+                nameV[n] = name[n]
             end
         end
+        
         for n in eachindex(y)
             trace[n] = scatter(
                 y = y[n],
                 x = x,
-                mode = mode[n],
-                line = attr(color = color[n]),
-                name = name[n],
+                mode = modeV[n],
+                line = attr(color = colorV[n]),
+                name = nameV[n],
             )
         end
     else
@@ -286,25 +295,29 @@ function plot_polar(
 )
     if isa(r, Vector) && eltype(r) <: Vector
         trace = Vector{GenericTrace}(undef, length(r))
+        modeV = fill("line", length(r))
+        colorV = fill("", length(r))
+        nameV = fill("", length(r))
+        
         if !(mode isa Vector)
-            mode = fill(mode, length(r))
-        elseif length(mode) < length(r)
-            for _ = 1:length(r)-length(mode)
-                push!(mode, "lines")
+            fill!(modeV, mode)
+        else
+            for n in eachindex(mode)
+                modeV[n] = mode[n]
             end
         end
         if !(color isa Vector)
-            color = fill(color, length(r))
-        elseif length(color) < length(r)
-            for _ = 1:length(r)-length(color)
-                push!(color, "")
+            fill!(colorV, color)
+        else
+            for n in eachindex(color)
+                colorV[n] = color[n]
             end
         end
         if !(name isa Vector)
-            name = fill(name, length(r))
-        elseif length(name) < length(r)
-            for _ = 1:length(r)-length(name)
-                push!(name, "")
+            fill!(nameV, name)
+        else
+            for n in eachindex(name)
+                nameV[n] = name[n]
             end
         end
 
@@ -313,9 +326,9 @@ function plot_polar(
                 trace[n] = scatterpolar(
                     r = r[n],
                     theta = theta[n],
-                    mode = mode[n],
-                    line = attr(color = color[n]),
-                    name = name[n],
+                    mode = modeV[n],
+                    line = attr(color = colorV[n]),
+                    name = nameV[n],
                 )
             end
         else
@@ -323,9 +336,9 @@ function plot_polar(
                 trace[n] = scatter(
                     r = r[n],
                     theta = theta,
-                    mode = mode[n],
-                    line = attr(color = color[n]),
-                    name = name[n],
+                    mode = modeV[n],
+                    line = attr(color = colorV[n]),
+                    name = nameV[n],
                 )
             end
         end
@@ -397,35 +410,39 @@ function plot_polar(
         theta_max = minimum(length.(y))
         theta = 0:1:theta_max-1
         trace = Vector{GenericTrace}(undef, length(r))
+        modeV = fill("line", length(r))
+        colorV = fill("", length(r))
+        nameV = fill("", length(r))
+        
         if !(mode isa Vector)
-            mode = fill(mode, length(r))
-        elseif length(mode) < length(r)
-            for _ = 1:length(r)-length(mode)
-                push!(mode, "lines")
+            fill!(modeV, mode)
+        else
+            for n in eachindex(mode)
+                modeV[n] = mode[n]
             end
         end
         if !(color isa Vector)
-            color = fill(color, length(r))
-        elseif length(color) < length(r)
-            for _ = 1:length(r)-length(color)
-                push!(color, "")
+            fill!(colorV, color)
+        else
+            for n in eachindex(color)
+                colorV[n] = color[n]
             end
         end
         if !(name isa Vector)
-            name = fill(name, length(r))
-        elseif length(name) < length(r)
-            for _ = 1:length(r)-length(name)
-                push!(name, "")
+            fill!(nameV, name)
+        else
+            for n in eachindex(name)
+                nameV[n] = name[n]
             end
         end
-
+        
         for n in scatterpolar(r)
             trace[n] = scatter(
                 r = r[n],
                 theta = theta,
-                mode = mode[n],
-                line = attr(color = color[n]),
-                name = name[n],
+                mode = modeV[n],
+                line = attr(color = colorV[n]),
+                name = nameV[n],
             )
         end
     else
@@ -666,8 +683,8 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 #### Arguments
 
 - `Pat`: A `Pattern` or a vector of `Pattern`s
-- `ind`: Index to slice the pattern, either `1` or `2` (default: `1`)
-- `dims`: Dimension to slice the pattern (default: `1`)
+- `ind`: Index to slice the pattern (default: `1`)
+- `dims`: Dimension to slice the pattern, either `1` or `2` (default: `1`)
 - `type`: Plot type, either `"normal"` or `"polar"` (default: `"normal"`)
 - `xlabel`: Label for the x-axis (default: `""`)
 - `ylabel`: Label for the y-axis (default: `""`)
@@ -699,50 +716,31 @@ function ptn_2d(
     name::Union{String,Vector{String}} = "",
 )
     if Pat isa Vector
-        if !(mode isa Vector)
-            mode = fill("lines", length(Pat))
-        elseif length(mode) < length(Pat)
-            for _ = 1:length(Pat)-length(mode)
-                push!(mode, "lines")
-            end
-        end
-        if !(color isa Vector)
-            color = fill("", length(Pat))
-        elseif length(color) < length(Pat)
-            for _ = 1:length(Pat)-length(color)
-                push!(color, "")
-            end
-        end
-        if !(name isa Vector)
-            name = fill("", length(Pat))
-        elseif length(name) < length(Pat)
-            for _ = 1:length(Pat)-length(name)
-                push!(name, "")
-            end
-        end
+        indV = ones(Int, length(Pat))
+        dimsV = ones(Int, length(Pat))
         if !(ind isa Vector)
-            ind = fill(1, length(Pat))
-        elseif length(ind) < length(Pat)
-            for _ = 1:length(Pat)-length(ind)
-                push!(ind, 1)
+            fill!(indV, ind)
+        else
+            for n in eachindex(ind)
+                indV[n] = ind[n]
             end
         end
         if !(dims isa Vector)
-            dims = fill(1, length(Pat))
-        elseif length(dims) < length(Pat)
-            for _ = 1:length(Pat)-length(dims)
-                push!(dims, 1)
+            fill!(dimsV, dims)
+        else
+            for n in eachindex(dims)
+                dimsV[n] = dims[n]
             end
         end
 
         cut = Vector{Vector{eltype(Pat[1].U)}}(undef, length(Pat))
         x = Vector{Vector{eltype(Pat[1].x)}}(undef, length(Pat))
         for n in eachindex(Pat)
-            if dims[n] == 1
-                cut[n] = Pat[n].U[:, ind[n]]
+            if dimsV[n] == 1
+                cut[n] = Pat[n].U[:, indV[n]]
                 x[n] = Pat[n].x
-            elseif dims[n] == 2
-                cut[n] = Pat[n].U[ind, :]
+            elseif dimsV[n] == 2
+                cut[n] = Pat[n].U[indV[n], :]
                 x[n] = Pat[n].y
             else
                 println("dims should be 1 or 2.")

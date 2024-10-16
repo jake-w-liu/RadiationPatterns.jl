@@ -170,8 +170,8 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 #### Arguments
 
 - `Pat`: A `Pattern` or a vector of `Pattern`s
-- `ind`: Index to slice the pattern, either `1` or `2` (default: `1`)
-- `dims`: Dimension to slice the pattern (default: `1`)
+- `ind`: Index to slice the pattern (default: `1`)
+- `dims`: Dimension to slice the pattern, either `1` or `2` (default: `1`)
 - `type`: Plot type, either `"normal"` or `"polar"` (default: `"normal"`)
 - `xlabel`: Label for the x-axis (default: `""`)
 - `ylabel`: Label for the y-axis (default: `""`)

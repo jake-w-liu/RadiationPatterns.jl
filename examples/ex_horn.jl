@@ -9,7 +9,7 @@ phi = collect(0:360)
 
 Pat = Pattern(data, tht, phi)
 Pat = direc_ptn(Pat) # transform to directivity pattern
-Pat.U .= 10 * log10.(abs.(Pat.U)) # transform to dB scale
+db_ptn!(Pat) # transform to dB scale
 
 fig1 = ptn_3d(Pat, dB = true)
 display(fig1)

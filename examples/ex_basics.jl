@@ -28,7 +28,7 @@ display(fig4)
 # creates directivity pattern and transform to dB scale
 println("directity of a dipole is $(direc(Pat))") # sould be around 1.5
 Dpat = direc_ptn(Pat)
-Dpat.U .= 10 .*log10.(Dpat.U)
+db_ptn!(Dpat)
 
 # plot 3D radiation pattern in dB scale
 fig5 = ptn_3d(Dpat; dB = true)

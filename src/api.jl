@@ -919,3 +919,45 @@ The directivity value.
 function direc(Pat::Pattern)
     return maximum(direc_ptn(Pat).U)
 end
+
+"""
+db_ptn(Pat::Pattern, topower=false)
+
+Transform Pattern object to dB Pattern, return a new Pattern object.
+
+#### Arguments
+
+- `Pat`: A `Pattern`
+- `topower`: if `ture`, then uses 20log10(.), otherwise 10log10(.).
+
+#### Returns
+
+The dB Pattern object.
+"""
+function db_ptn(Pat::Pattern, topower=false)
+    if !topower
+        return Pattern(10 .* log10.(abs.(Pat.U)), Pat.x, Pat.y)
+    else
+        return Pattern(20 .* log10.(abs.(Pat.U)), Pat.x, Pat.y)
+    end
+end
+
+"""
+db_ptn!(Pat::Pattern, topower=false)
+
+Transform Pattern object to dB Pattern.
+
+#### Arguments
+
+- `Pat`: A `Pattern`
+- `topower`: if `ture`, then uses 20log10(.), otherwise 10log10(.).
+
+"""
+function db_ptn!(Pat::Pattern, topower=false)
+    if !topower
+        Pat.U = 10 .* log10.(abs.(Pat.U))
+    else
+        Pat.U = 20 .* log10.(abs.(Pat.U))
+    end
+end
+

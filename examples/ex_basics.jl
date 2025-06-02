@@ -18,11 +18,11 @@ fig2 = ptn_2d(Pat; ind = 1, dims = 1, type = "polar", color = "red")
 display(fig2);
 
 # conparison of a consine tapered pattern
-fig3 = ptn_2d([Pat, Pattern(cosd.(T) , tht, phi)]; ind = 1, dims = 1, xlabel = "θ (deg)", ylabel = "amplitude", xrange=[0, 90], name = ["dipole", "consine"])
+fig3 = ptn_2d([Pat, Pattern(cosd.(T) , tht, phi)]; ind = 1, dims = 1, xlabel = "θ (deg)", ylabel = "amplitude", xrange=[0, 90], legend = ["dipole", "consine"])
 display(fig3)
 
 # conparison of a consine tapered pattern
-fig4 = ptn_2d([Pat, Pattern(abs.(cosd.(T)) , tht, phi)]; ind = 1, dims = 1, type = "polar", name = ["dipole", "consine"])
+fig4 = ptn_2d([Pat, Pattern(abs.(cosd.(T)) , tht, phi)]; ind = 1, dims = 1, type = "polar", legend = ["dipole", "consine"])
 display(fig4)
 
 # creates directivity pattern and transform to dB scale

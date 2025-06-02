@@ -3,7 +3,7 @@
 
 [![Build Status](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml)
 
-`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJS.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
+`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJS.jl` and `PlotlySupply.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
 
 <p align="center">
   <img alt="illus1" src="./media/illus1.png" width="50%" height="auto" />
@@ -49,95 +49,7 @@ The convention for `x` associating with `theta` in degrees and `y` associating w
 
 ## Functions
 
-There are three primary plotting functions used by the pattern plotting function: `plot_rect`, `plot_polar` and `plot_holo`. They are not directly used for pattern plotting; however, these three functions can also be used as a simplified API to draw 2D plots in rectangular and polar coordinates, or heatmaps (if you find settings in PlotlyJS very cumbersome :laughing:). Funtions start with `ptn_` are used to plot `Pattern` object directly. In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. Noted that both of the functions `plot_rect`, `plot_polar` support plotting multiple traces in one plot.
-
-### `plot_rect`
-
-```julia
-plot_rect(
-    x, y;
-    xlabel = "",
-    ylabel = "",
-    xrange = [0, 0],
-    yrange = [0, 0],
-    width = 0,
-    height = 0,
-    mode = "lines",
-    color = "",
-)
-```
-
-Plots a rectangular (Cartesian) plot.
-
-#### Arguments
-
-- `x`: x-coordinate data (can be vector of vectors, or be omitted)
-- `y`: y-coordinate data (can be vector of vectors)
-- `xlabel`: Label for the x-axis (default: `""`)
-- `ylabel`: Label for the y-axis (default: `""`)
-- `xrange`: Range for the x-axis (default: `[0, 0]`)
-- `yrange`: Range for the y-axis (default: `[0, 0]`)
-- `width`: Width of the plot (default: `0`)
-- `height`: Height of the plot (default: `0`)
-- `mode`: Plotting mode (default: `"lines"`, can be vector)
-- `color`: Color of the plot lines (default: `""`, can be vector)
-- `name`: Name of the plot lines (default: `""`, can be vector)
-
-### `plot_polar`
-
-```julia
-plot_polar(
-    theta, r;
-    trange = [0, 0],
-    rrange = [0, 0],
-    width = 0,
-    height = 0,
-    mode = "lines",
-    color = "",
-)
-```
-
-Plots a polar plot.
-
-#### Arguments
-
-- `theta`: Angular coordinate data (can be vector of vectors, or be omitted)
-- `r`: Radial coordinate data (can be vector of vectors)
-- `trange`: Range for the angular axis (default: `[0, 0]`)
-- `rrange`: Range for the radial axis (default: `[0, 0]`)
-- `width`: Width of the plot (default: `0`)
-- `height`: Height of the plot (default: `0`)
-- `mode`: Plotting mode (default: `"lines"`, can be vector)
-- `color`: Color of the plot lines (default: `""`, can be vector)
-- `name`: Name of the plot lines (default: `""`, can be vector)
-
-### `plot_holo`
-
-```julia
-plot_holo(
-    x,
-    y, 
-    U;
-    xlabel::String = "",
-    ylabel::String = "",
-    zrange::Vector{<:Real} = [0, 0],
-    ref_size = 500,
-    colorscale = "Jet",
-)
-```
-
-Plots holographic data.
-
-#### Arguments
-
-- 'x': x-axis range (can be omitted)
-- 'y': x-axis range (can be omitted)
-- `U`: 2D hologram data
-- `xlabel`: Label for the x-axis (default: `""`)
-- `ylabel`: Label for the y-axis (default: `""`)
-- `zrange`: Range for the z-axis (default: `[0, 0]`)
-- `ref_size`: ref size of the plot in pixels (default: `500`)
-- `colorscale`: Color scale for the heatmap (default: `"Jet"`)
+Funtions start with `ptn_` are used to plot `Pattern` object directly. In the following, keyword default value with `0` (or `[0, 0]` in ranges) means not specifying these keywords in the plotly plots. 
 
 ___
 
@@ -161,11 +73,11 @@ ptn_2d(
     height::Real  = 0,
     mode::Union{String,Vector{String}} = "lines",
     color::Union{String,Vector{String}} = "",
-    name::Union{String,Vector{String}}  = "",
+    legend::Union{String,Vector{String}}  = "",
 )
 ```
 
-Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `name` by setting these keywords as vectors (if not set, default values are used).
+Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `legend` by setting these keywords as vectors (if not set, default values are used).
 
 #### Arguments
 
@@ -183,7 +95,7 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 - `height`: Height of the plot (default: `0`)
 - `mode`: Plotting mode (default: `"lines"`)
 - `color`: Color of the plot lines (default: `""`)
-- `name`: Name of the plot lines (default: `""`)
+- `legend`: legend of the plot lines (default: `""`)
 
 ### `ptn_3d`
 

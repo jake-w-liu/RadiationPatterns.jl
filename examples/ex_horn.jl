@@ -22,5 +22,6 @@ fig2 = ptn_2d(
     xlabel = "θ (deg)", 
     ylabel = "directivity (dBi)",
     legend = ["E-plane", "H-plane"],
+    dash = ["", "dash"],
 )
 display(fig2)

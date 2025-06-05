@@ -53,7 +53,7 @@ Funtions start with `ptn_` are used to plot `Pattern` object directly. In the fo
 
 ___
 
-The following functions create pattern plots from the `Pattern` object. Currently 2D patterns, 3D patterns, and holograms (can be used to plot a slice of field distributions) are supported. 
+The following functions create pattern plots from the `Pattern` object. Currently 2D patterns, 3D patterns, and holograms (can be used to plot a slice of field distributions) are supported. To understand the usage, one can also look up [`PlotlySupply.jl`](https://github.com/jake-w-liu/PlotlySupply.jl) for reference.
 
 ### `ptn_2d`
 
@@ -72,12 +72,13 @@ ptn_2d(
     width::Real = 0,
     height::Real  = 0,
     mode::Union{String,Vector{String}} = "lines",
+    dash::Union{String,Vector{String}} = "",
     color::Union{String,Vector{String}} = "",
     legend::Union{String,Vector{String}}  = "",
 )
 ```
 
-Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `legend` by setting these keywords as vectors (if not set, default values are used).
+Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `dash`, `color` and `legend` by setting these keywords as vectors (if not set, default values are used).
 
 #### Arguments
 
@@ -94,6 +95,7 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 - `width`: Width of the plot (default: `0`)
 - `height`: Height of the plot (default: `0`)
 - `mode`: Plotting mode (default: `"lines"`)
+- `dash`: Dash setting (default: `""`)
 - `color`: Color of the plot lines (default: `""`)
 - `legend`: legend of the plot lines (default: `""`)
 

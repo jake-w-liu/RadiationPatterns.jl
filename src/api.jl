@@ -20,6 +20,7 @@ ptn_2d(
     width::Real = 0,
     height::Real  = 0,
     mode::Union{String,Vector{String}} = "lines",
+    dash::Union{String,Vector{String}} = "",
     color::Union{String,Vector{String}} = "",
     legend::Union{String,Vector{String}}  = "",
 )
@@ -41,6 +42,7 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 - `width`: Width of the plot (default: `0`)
 - `height`: Height of the plot (default: `0`)
 - `mode`: Plotting mode (default: `"lines"`)
+- `dash`: Dash setting (default: `""`)
 - `color`: Color of the plot lines (default: `""`)
 - `legend`: Legend of the plot lines (default: `""`)
 """
@@ -58,6 +60,7 @@ function ptn_2d(
     width::Real = 0,
     height::Real = 0,
     mode::Union{String,Vector{String}} = "lines",
+    dash::Union{String,Vector{String}} = "",
     color::Union{String,Vector{String}} = "",
     legend::Union{String,Vector{String}} = "",
 )
@@ -116,6 +119,7 @@ function ptn_2d(
             width = width,
             height = height,
             mode = mode,
+            dash = dash,
             color = color,
             legend = legend,
         )
@@ -128,6 +132,7 @@ function ptn_2d(
             width = width,
             height = height,
             mode = mode,
+            dash = dash,
             color = color,
             legend = legend,
         )

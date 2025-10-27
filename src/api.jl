@@ -221,10 +221,10 @@ function ptn_holo(
         Pat.x,
         Pat.y,
         Pat.U;
-        xlabel,
-        ylabel,
-        zrange,
-        colorscale,
+        xlabel = xlabel,
+        ylabel = ylabel,
+        zrange = zrange,
+        colorscale = colorscale,
     )
 end
 

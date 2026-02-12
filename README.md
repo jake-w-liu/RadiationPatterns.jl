@@ -3,7 +3,7 @@
 
 [![Build Status](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/akjake616/RadiationPatterns.jl/actions/workflows/CI.yml)
 
-`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlyJS.jl` and `PlotlySupply.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. However, if further modifications are needed, one can always use the API provided by `PlotlyJS.jl` (such as `update!`) to modify the figures returned by the API provided by this package (`SyncPlot` objects are returned in the functions). 
+`RadiationPatterns.jl` is a Julia package designed for visualizing radiation patterns using `PlotlySupply.jl`. The package provides functions for creating 2D and 3D plots of radiation patterns, as well as calculating directivity. I hope to confine the settings of the plots to the essential ones using keywords. 
 
 <p align="center">
   <img alt="illus1" src="./media/illus1.png" width="50%" height="auto" />

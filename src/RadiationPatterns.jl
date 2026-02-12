@@ -1,13 +1,12 @@
 module RadiationPatterns
 
-using PlotlyJS
+using PlotlySupply
 using PlotlyGeometries
 using MeshGrid
 using Trapz
 using LinearAlgebra
 using BatchAssign
 using Infiltrator
-using PlotlySupply
 
 export Pattern
 export ptn_2d, ptn_3d

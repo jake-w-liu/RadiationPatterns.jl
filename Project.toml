@@ -1,7 +1,7 @@
 name = "RadiationPatterns"
 uuid = "b6717af4-2a8a-40aa-9b8e-77d45ce125cc"
 authors = ["Jake W. Liu"]
-version = "2.3.0"
+version = "2.3.1"
 
 [deps]
 BatchAssign = "e837618a-1c15-48db-beb0-68297dffdb28"
@@ -17,7 +17,7 @@ BatchAssign = "1"
 Infiltrator = "1.9"
 MeshGrid = "1.0.3"
 PlotlyGeometries = "2.3.0"
-PlotlySupply = "1.4.0"
+PlotlySupply = "1.4.1"
 Trapz = "2.0.3"
 julia = "1.10"
 

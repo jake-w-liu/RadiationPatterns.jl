@@ -198,6 +198,7 @@ ptn_holo(
     ylabel::String = "",
     zrange::Vector{<:Real} = [0, 0],
     colorscale = "Jet",
+    equalar:Bool = true,
 )
 
 Plots a holographic (heatmap) radiation pattern. Currently I have issues in setting both the axis ratio and the range of the heatmap plot. In order to have an 1:1 aspect ratio, I have tried to fine tune the width and height of the plot. 
@@ -209,6 +210,7 @@ Plots a holographic (heatmap) radiation pattern. Currently I have issues in sett
 - `ylabel`: Label for the y-axis (default: `""`)
 - `zrange`: Range for the z-axis (default: `[0, 0]`)
 - `colorscale`: Color scale for the heatmap (default: `"Jet"`)
+- `equalar`: Boolean to set equal aspect ratio (default: `true`)
 """
 function ptn_holo(
     Pat::Pattern;
@@ -216,11 +218,13 @@ function ptn_holo(
     ylabel::String = "",
     zrange::Vector{<:Real} = [0, 0],
     colorscale = "Jet",
+    equalar::Bool = true,
 )
     return plot_heatmap(
         Pat.x,
         Pat.y,
         Pat.U;
+        equalar = equalar,
         xlabel = xlabel,
         ylabel = ylabel,
         zrange = zrange,

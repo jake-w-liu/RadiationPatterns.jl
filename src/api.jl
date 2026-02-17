@@ -23,6 +23,7 @@ ptn_2d(
     dash::Union{String,Vector{String}} = "",
     color::Union{String,Vector{String}} = "",
     legend::Union{String,Vector{String}}  = "",
+    show::Bool = false,
 )
 
 Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For example, setting `dim=1` takes the slice of `U[:, ind]`, and setting `dim=2` takes the slice of `U[ind, :]`. Can be used for comparing two or more patterns also (see the example `ex_basics.jl` and `ex_horn.jl`). When comparing two or more pattern cuts, one can specify different `ind`, `dims`, `mode`, `color` and `legend` by setting these keywords as vectors (if not set, default values are used).
@@ -45,6 +46,7 @@ Plots a 2D radiation pattern by setting the keywords `ind` and `dim`. For exampl
 - `dash`: Dash setting (default: `""`)
 - `color`: Color of the plot lines (default: `""`)
 - `legend`: Legend of the plot lines (default: `""`)
+- `show`: Show the plot (default: `false`)
 """
 function ptn_2d(
     Pat::Union{Pattern,Vector{<:Pattern}};
@@ -63,6 +65,7 @@ function ptn_2d(
     dash::Union{String,Vector{String}} = "",
     color::Union{String,Vector{String}} = "",
     legend::Union{String,Vector{String}} = "",
+    show::Bool = false,
 )
     if Pat isa Vector
         indV = ones(Int, length(Pat))
@@ -122,6 +125,7 @@ function ptn_2d(
             dash = dash,
             color = color,
             legend = legend,
+            show = show,
         )
     elseif type == "polar"
         fig = plot_scatterpolar(
@@ -135,6 +139,7 @@ function ptn_2d(
             dash = dash,
             color = color,
             legend = legend,
+            show = show,
         )
     else
         println("type should be \"normal\" or \"polar\".")
@@ -154,8 +159,9 @@ Plots a 3D radiation pattern. In 3D cases, `Pat.x` should be `theta` values in d
 - `Pat`: A `Pattern`
 - `dB`: Boolean to plot if the pattern is in decibels (default: `false`)
 - `thr`: Threshold value for the plot if dB is true (default: `-50`)
+- `show`: Show the plot (default: `false`)
 """
-function ptn_3d(Pat::Pattern; dB::Bool = false, thr::Real = -50)
+function ptn_3d(Pat::Pattern; dB::Bool = false, thr::Real = -50, show::Bool = false)
     if thr >= 0
         thr = -50  # default
     end
@@ -184,7 +190,7 @@ function ptn_3d(Pat::Pattern; dB::Bool = false, thr::Real = -50)
         coloraxis = attr(cmax = maximum(A_plt), cmin = minimum(A_plt)),
         template = :plotly_white,
     )
-    fig = plot(trace, layout)
+    fig = plot(trace, layout; show = show)
     r = maximum(A_plt) * 1.05
     add_ref_axes!(fig, [0, 0, 0], r)
 
@@ -199,9 +205,10 @@ ptn_holo(
     zrange::Vector{<:Real} = [0, 0],
     colorscale = "Jet",
     equalar:Bool = true,
+    show::Bool = false,
 )
 
-Plots a holographic (heatmap) radiation pattern. Currently I have issues in setting both the axis ratio and the range of the heatmap plot. In order to have an 1:1 aspect ratio, I have tried to fine tune the width and height of the plot. 
+Plots a holographic (heatmap) radiation pattern. Currently I have issues in setting both the axis ratio and the range of the heatmap plot. In order to have an 1:1 aspect ratio, I have tried to fine tune the width and height of the plot.
 
 #### Arguments
 
@@ -211,6 +218,7 @@ Plots a holographic (heatmap) radiation pattern. Currently I have issues in sett
 - `zrange`: Range for the z-axis (default: `[0, 0]`)
 - `colorscale`: Color scale for the heatmap (default: `"Jet"`)
 - `equalar`: Boolean to set equal aspect ratio (default: `true`)
+- `show`: Show the plot (default: `false`)
 """
 function ptn_holo(
     Pat::Pattern;
@@ -219,6 +227,7 @@ function ptn_holo(
     zrange::Vector{<:Real} = [0, 0],
     colorscale = "Jet",
     equalar::Bool = true,
+    show::Bool = false,
 )
     return plot_heatmap(
         Pat.x,
@@ -229,6 +238,7 @@ function ptn_holo(
         ylabel = ylabel,
         zrange = zrange,
         colorscale = colorscale,
+        show = show,
     )
 end
 
